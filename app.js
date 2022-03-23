@@ -2,7 +2,21 @@
 const express = require('express');
 const app = express();
 
+require('dotenv').config()
+
 const port = process.env.PORT || 3000;
+
+//conexion a base de datos
+const mongoose = require('mongoose');
+
+
+const uri= `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@realmcluster.cwwq3.mongodb.net/${process.env.BASE}?retryWrites=true&w=majority`;
+
+mongoose.connect(uri,
+    { useNewUrlParser: true, useUnifiedTopology: true }
+).then(() => console.log('base de datos conectada'))
+.catch(e => console.log(e))
+ 
 
 //motor de plantilla
 app.set('view engine', 'ejs');
@@ -13,13 +27,9 @@ app.set('views', __dirname +  '/views');
 
 app.use(express.static(__dirname + "/public"))
 
-app.get('/', (req, res) =>{
-    res.render("index", {titulo : "mi titulo dinamico"})
-})
+app.use('/', require('./router/rutaweb'));
+app.use('/mascotas', require('./router/mascotas'));
 
-app.get('/servicios',(req, res)=>{
-    res.render("servicios", {tituloServicios: "este es un mensaje dinamico de servicios"})
-})
 
 app.use('/', (req, res, next) =>{
     res.status(404).render("404",{
@@ -27,9 +37,6 @@ app.use('/', (req, res, next) =>{
         descripcion: "Titulo del sitio Web"
     })
 })
-
-
-
 
 
 
