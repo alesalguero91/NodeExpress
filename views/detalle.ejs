@@ -1,0 +1,40 @@
+<%- include("template/cabecera", {tituloWeb: "Crear nueva mascota"}) %>
+
+    <div class="container">
+        <h1>Detalle</h1>
+        <% if (error) { %>
+        <p>
+            <%= mensaje %>
+        </p>
+         <a href="/mascotas" class="btn btn-dark btn-block">Volver a Mascota</a>
+        <% } %>
+
+        <% if (!error) { %>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">nombre</th>
+                    <th scope="col">descripcion</th>
+                    <th scope="col">accion</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <th scope="row"><%= mascota.id %> </th>
+                        <th><%= mascota.nombre %></th>
+                        <th><%= mascota.descripcion %></th>
+                        <th></th>
+                    </tr>
+                   
+                </tbody>
+              </table>
+        <% } %>
+
+
+    </div>
+    
+    
+
+<%- include("template/footer") %>
